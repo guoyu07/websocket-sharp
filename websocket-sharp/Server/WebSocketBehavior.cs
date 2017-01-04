@@ -456,22 +456,22 @@ namespace WebSocketSharp.Server
       if (_websocket != null)
         _websocket.Send (data);
     }
-
-    /// <summary>
-    /// Sends the specified <paramref name="file"/> as binary data to the client on a session.
-    /// </summary>
-    /// <remarks>
-    /// This method is available after the WebSocket connection has been established.
-    /// </remarks>
-    /// <param name="file">
-    /// A <see cref="FileInfo"/> that represents the file to send.
-    /// </param>
-    protected void Send (FileInfo file)
+#if !PCL
+		/// <summary>
+		/// Sends the specified <paramref name="file"/> as binary data to the client on a session.
+		/// </summary>
+		/// <remarks>
+		/// This method is available after the WebSocket connection has been established.
+		/// </remarks>
+		/// <param name="file">
+		/// A <see cref="FileInfo"/> that represents the file to send.
+		/// </param>
+		protected void Send (FileInfo file)
     {
       if (_websocket != null)
         _websocket.Send (file);
     }
-
+#endif
     /// <summary>
     /// Sends text <paramref name="data"/> to the client on a session.
     /// </summary>
@@ -511,33 +511,33 @@ namespace WebSocketSharp.Server
       if (_websocket != null)
         _websocket.SendAsync (data, completed);
     }
-
-    /// <summary>
-    /// Sends the specified <paramref name="file"/> as binary data asynchronously to
-    /// the client on a session.
-    /// </summary>
-    /// <remarks>
-    ///   <para>
-    ///   This method is available after the WebSocket connection has been established.
-    ///   </para>
-    ///   <para>
-    ///   This method doesn't wait for the send to be complete.
-    ///   </para>
-    /// </remarks>
-    /// <param name="file">
-    /// A <see cref="FileInfo"/> that represents the file to send.
-    /// </param>
-    /// <param name="completed">
-    /// An <c>Action&lt;bool&gt;</c> delegate that references the method(s) called when
-    /// the send is complete. A <see cref="bool"/> passed to this delegate is <c>true</c>
-    /// if the send is complete successfully.
-    /// </param>
-    protected void SendAsync (FileInfo file, Action<bool> completed)
+#if !PCL
+		/// <summary>
+		/// Sends the specified <paramref name="file"/> as binary data asynchronously to
+		/// the client on a session.
+		/// </summary>
+		/// <remarks>
+		///   <para>
+		///   This method is available after the WebSocket connection has been established.
+		///   </para>
+		///   <para>
+		///   This method doesn't wait for the send to be complete.
+		///   </para>
+		/// </remarks>
+		/// <param name="file">
+		/// A <see cref="FileInfo"/> that represents the file to send.
+		/// </param>
+		/// <param name="completed">
+		/// An <c>Action&lt;bool&gt;</c> delegate that references the method(s) called when
+		/// the send is complete. A <see cref="bool"/> passed to this delegate is <c>true</c>
+		/// if the send is complete successfully.
+		/// </param>
+		protected void SendAsync (FileInfo file, Action<bool> completed)
     {
       if (_websocket != null)
         _websocket.SendAsync (file, completed);
     }
-
+#endif
     /// <summary>
     /// Sends text <paramref name="data"/> asynchronously to the client on a session.
     /// </summary>
@@ -592,6 +592,6 @@ namespace WebSocketSharp.Server
         _websocket.SendAsync (stream, length, completed);
     }
 
-    #endregion
+#endregion
   }
 }

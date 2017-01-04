@@ -2135,12 +2135,12 @@ namespace WebSocketSharp
     {
       return data == null ? "'data' is null." : null;
     }
-
-    internal static string CheckSendParameter (FileInfo file)
+#if !PCL
+		internal static string CheckSendParameter (FileInfo file)
     {
       return file == null ? "'file' is null." : null;
     }
-
+#endif
     internal static string CheckSendParameter (string data)
     {
       return data == null ? "'data' is null." : null;
@@ -2334,9 +2334,9 @@ namespace WebSocketSharp
       }
     }
 
-    #endregion
+#endregion
 
-    #region Public Methods
+#region Public Methods
 
     /// <summary>
     /// Accepts the WebSocket handshake request.
@@ -2791,30 +2791,31 @@ namespace WebSocketSharp
       send (Opcode.Binary, new MemoryStream (data));
     }
 
-    /// <summary>
-    /// Sends the specified file as the binary data using the WebSocket connection.
-    /// </summary>
-    /// <param name="fileInfo">
-    /// A <see cref="FileInfo"/> that specifies a file to send.
-    /// </param>
-    /// <exception cref="InvalidOperationException">
-    /// The current state of the connection is not Open.
-    /// </exception>
-    /// <exception cref="ArgumentNullException">
-    /// <paramref name="fileInfo"/> is <see langword="null"/>.
-    /// </exception>
-    /// <exception cref="ArgumentException">
-    ///   <para>
-    ///   The file does not exist.
-    ///   </para>
-    ///   <para>
-    ///   -or-
-    ///   </para>
-    ///   <para>
-    ///   The file could not be opened.
-    ///   </para>
-    /// </exception>
-    public void Send (FileInfo fileInfo)
+#if !PCL
+		/// <summary>
+		/// Sends the specified file as the binary data using the WebSocket connection.
+		/// </summary>
+		/// <param name="fileInfo">
+		/// A <see cref="FileInfo"/> that specifies a file to send.
+		/// </param>
+		/// <exception cref="InvalidOperationException">
+		/// The current state of the connection is not Open.
+		/// </exception>
+		/// <exception cref="ArgumentNullException">
+		/// <paramref name="fileInfo"/> is <see langword="null"/>.
+		/// </exception>
+		/// <exception cref="ArgumentException">
+		///   <para>
+		///   The file does not exist.
+		///   </para>
+		///   <para>
+		///   -or-
+		///   </para>
+		///   <para>
+		///   The file could not be opened.
+		///   </para>
+		/// </exception>
+		public void Send (FileInfo fileInfo)
     {
       if (_readyState != WebSocketState.Open) {
         var msg = "The current state of the connection is not Open.";
@@ -2833,23 +2834,23 @@ namespace WebSocketSharp
 
       send (Opcode.Binary, stream);
     }
-
-    /// <summary>
-    /// Sends the specified <paramref name="data"/> using the WebSocket connection.
-    /// </summary>
-    /// <param name="data">
-    /// A <see cref="string"/> that represents the text data to send.
-    /// </param>
-    /// <exception cref="InvalidOperationException">
-    /// The current state of the connection is not Open.
-    /// </exception>
-    /// <exception cref="ArgumentNullException">
-    /// <paramref name="data"/> is <see langword="null"/>.
-    /// </exception>
-    /// <exception cref="ArgumentException">
-    /// <paramref name="data"/> could not be UTF-8-encoded.
-    /// </exception>
-    public void Send (string data)
+#endif
+		/// <summary>
+		/// Sends the specified <paramref name="data"/> using the WebSocket connection.
+		/// </summary>
+		/// <param name="data">
+		/// A <see cref="string"/> that represents the text data to send.
+		/// </param>
+		/// <exception cref="InvalidOperationException">
+		/// The current state of the connection is not Open.
+		/// </exception>
+		/// <exception cref="ArgumentNullException">
+		/// <paramref name="data"/> is <see langword="null"/>.
+		/// </exception>
+		/// <exception cref="ArgumentException">
+		/// <paramref name="data"/> could not be UTF-8-encoded.
+		/// </exception>
+		public void Send (string data)
     {
       if (_readyState != WebSocketState.Open) {
         var msg = "The current state of the connection is not Open.";
@@ -2967,40 +2968,40 @@ namespace WebSocketSharp
 
       sendAsync (Opcode.Binary, new MemoryStream (data), completed);
     }
-
-    /// <summary>
-    /// Sends the specified file as the binary data asynchronously using
-    /// the WebSocket connection.
-    /// </summary>
-    /// <remarks>
-    /// This method does not wait for the send to be complete.
-    /// </remarks>
-    /// <param name="fileInfo">
-    /// A <see cref="FileInfo"/> that specifies a file to send.
-    /// </param>
-    /// <param name="completed">
-    /// An <c>Action&lt;bool&gt;</c> delegate that invokes the method called when
-    /// the send is complete. A <see cref="bool"/> passed to this delegate will be
-    /// <c>true</c> if the send has done with no error.
-    /// </param>
-    /// <exception cref="InvalidOperationException">
-    /// The current state of the connection is not Open.
-    /// </exception>
-    /// <exception cref="ArgumentNullException">
-    /// <paramref name="fileInfo"/> is <see langword="null"/>.
-    /// </exception>
-    /// <exception cref="ArgumentException">
-    ///   <para>
-    ///   The file does not exist.
-    ///   </para>
-    ///   <para>
-    ///   -or-
-    ///   </para>
-    ///   <para>
-    ///   The file could not be opened.
-    ///   </para>
-    /// </exception>
-    public void SendAsync (FileInfo fileInfo, Action<bool> completed)
+#if !PCL
+		/// <summary>
+		/// Sends the specified file as the binary data asynchronously using
+		/// the WebSocket connection.
+		/// </summary>
+		/// <remarks>
+		/// This method does not wait for the send to be complete.
+		/// </remarks>
+		/// <param name="fileInfo">
+		/// A <see cref="FileInfo"/> that specifies a file to send.
+		/// </param>
+		/// <param name="completed">
+		/// An <c>Action&lt;bool&gt;</c> delegate that invokes the method called when
+		/// the send is complete. A <see cref="bool"/> passed to this delegate will be
+		/// <c>true</c> if the send has done with no error.
+		/// </param>
+		/// <exception cref="InvalidOperationException">
+		/// The current state of the connection is not Open.
+		/// </exception>
+		/// <exception cref="ArgumentNullException">
+		/// <paramref name="fileInfo"/> is <see langword="null"/>.
+		/// </exception>
+		/// <exception cref="ArgumentException">
+		///   <para>
+		///   The file does not exist.
+		///   </para>
+		///   <para>
+		///   -or-
+		///   </para>
+		///   <para>
+		///   The file could not be opened.
+		///   </para>
+		/// </exception>
+		public void SendAsync (FileInfo fileInfo, Action<bool> completed)
     {
       if (_readyState != WebSocketState.Open) {
         var msg = "The current state of the connection is not Open.";
@@ -3019,7 +3020,7 @@ namespace WebSocketSharp
 
       sendAsync (Opcode.Binary, stream, completed);
     }
-
+#endif
     /// <summary>
     /// Sends the specified <paramref name="data"/> asynchronously using
     /// the WebSocket connection.
@@ -3322,9 +3323,9 @@ namespace WebSocketSharp
       }
     }
 
-    #endregion
+#endregion
 
-    #region Explicit Interface Implementations
+#region Explicit Interface Implementations
 
     /// <summary>
     /// Closes the WebSocket connection, and releases all associated resources.
@@ -3343,6 +3344,6 @@ namespace WebSocketSharp
       close (1001, String.Empty);
     }
 
-    #endregion
+#endregion
   }
 }
