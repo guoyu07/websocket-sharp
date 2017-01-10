@@ -224,33 +224,10 @@ namespace WebSocketSharp
     /// </exception>
     public WebSocket (string url, params string[] protocols)
     {
-      if (url == null)
-        throw new ArgumentNullException ("url");
-
-      if (url.Length == 0)
-        throw new ArgumentException ("An empty string.", "url");
-
-      string msg;
-      if (!url.TryCreateWebSocketUri (out _uri, out msg))
-        throw new ArgumentException (msg, "url");
-
-      if (protocols != null && protocols.Length > 0) {
-        msg = protocols.CheckIfValidProtocols ();
-        if (msg != null)
-          throw new ArgumentException (msg, "protocols");
-
-        _protocols = protocols;
-      }
-
-      _base64Key = CreateBase64Key ();
-      _client = true;
-      _logger = new Logger ();
-      _message = messagec;
-      _secure = _uri.Scheme == "wss";
-      _waitTime = TimeSpan.FromSeconds (5);
-
-      init ();
+      SetupConnection(url, protocols);
     }
+
+	public WebSocket() { }
 
     #endregion
 
@@ -651,6 +628,36 @@ namespace WebSocketSharp
     #endregion
 
     #region Private Methods
+
+	private void SetupConnection(string url, params string[] protocols)
+	{
+		if (url == null)
+        throw new ArgumentNullException ("url");
+
+      if (url.Length == 0)
+        throw new ArgumentException ("An empty string.", "url");
+
+      string msg;
+      if (!url.TryCreateWebSocketUri (out _uri, out msg))
+        throw new ArgumentException (msg, "url");
+
+      if (protocols != null && protocols.Length > 0) {
+        msg = protocols.CheckIfValidProtocols ();
+        if (msg != null)
+          throw new ArgumentException (msg, "protocols");
+
+        _protocols = protocols;
+      }
+
+      _base64Key = CreateBase64Key ();
+      _client = true;
+      _logger = new Logger ();
+      _message = messagec;
+      _secure = _uri.Scheme == "wss";
+      _waitTime = TimeSpan.FromSeconds (5);
+
+      init ();
+	}
 
     // As server
     private bool accept ()
@@ -2664,6 +2671,12 @@ namespace WebSocketSharp
 
       closeAsync ((ushort) code, reason);
     }
+
+	public void Connect(string url, params string[] protocols)
+	{
+		SetupConnection(url, protocols);
+		Connect();
+	}
 
     /// <summary>
     /// Establishes a WebSocket connection.
