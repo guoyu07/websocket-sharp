@@ -53,17 +53,17 @@ namespace WebSocketSharp
 
     #region Internal Constructors
 
-    internal CloseEventArgs ()
+    public CloseEventArgs ()
     {
       _payloadData = PayloadData.Empty;
     }
 
-    internal CloseEventArgs (ushort code)
+	public CloseEventArgs (ushort code)
       : this (code, null)
     {
     }
 
-    internal CloseEventArgs (CloseStatusCode code)
+	public CloseEventArgs (CloseStatusCode code)
       : this ((ushort) code, null)
     {
     }
@@ -78,7 +78,7 @@ namespace WebSocketSharp
       _payloadData = new PayloadData (code, reason);
     }
 
-    internal CloseEventArgs (CloseStatusCode code, string reason)
+    public CloseEventArgs (CloseStatusCode code, string reason)
       : this ((ushort) code, reason)
     {
     }
