@@ -2698,6 +2698,12 @@ namespace WebSocketSharp
         open ();
     }
 
+	public void ConnectAsync(string url, params string[] protocols)
+	{
+		SetupConnection(url, protocols);
+		ConnectAsync();
+	}
+
     /// <summary>
     /// Establishes a WebSocket connection asynchronously.
     /// </summary>
